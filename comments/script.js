@@ -1,36 +1,59 @@
-let button = document.getElementById("fetch-btn")
-button.addEventListener("click", ButtonClicked);
+// let button = document.getElementById("fetch-btn")
+// button.addEventListener("click", ButtonClicked);
 
-function ButtonClicked() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://jsonplaceholder.typicode.com/comments", true);
-    xhr.onprogress = function () {
-        console.log("On progress");
-    };
-    xhr.onload = function () {
-        console.log(this.status);
-        if (this.status == 200 || this.status == 201) {
-            const comments = JSON.parse(this.responseText);
-            console.log(comments);
-            displayComments(comments);
-        } else {
-            console.log("Page Not found");
-        }
-    };
-    console.log(this.status);
-    xhr.send();
-}
+// function ButtonClicked() {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open("GET", "https://jsonplaceholder.typicode.com/comments", true);
+//     xhr.onprogress = function () {
+//         console.log("On progress");
+//     };
+//     xhr.onload = function () {
+//         console.log(this.status);
+//         if (this.status == 200 || this.status == 201) {
+//             const comments = JSON.parse(this.responseText);
+//             console.log(comments);
+//             displayComments(comments);
+//         } else {
+//             console.log("Page Not found");
+//         }
+//     };
+//     console.log(this.status);
+//     xhr.send();
+// }
 
-function displayComments(comments) {
-    const div = document.getElementById("display-data");
-    comments.forEach((comment) => {
-        const p = document.createElement("p");
-        p.innerHTML = `
+// function displayComments(comments) {
+//     const div = document.getElementById("display-data");
+//     comments.forEach((comment) => {
+//         const p = document.createElement("p");
+//         p.innerHTML = `
+//             <h4>NAME : ${comment.name}</h4>
+//             <p>EMAIL : ${comment.email}</p>
+//             <p>COMMENT : ${comment.body}</p>
+//         `;
+
+//         div.appendChild(p);
+//     });
+// }
+
+let xhr = new XMLHttpRequest();
+
+const btn = document.getElementById("fetch-btn");
+const contant = document.getElementById("display-data");
+
+btn.addEventListener(("click"), () => {
+    fetch("https://jsonplaceholder.typicode.com/albums").then((response) => {
+        return response.json();
+    }).then((comments) => {
+        const div = document.getElementById("display-data");
+        comments.forEach((comment) => {
+            const p = document.createElement("p");
+            p.innerHTML = `
             <h4>NAME : ${comment.name}</h4>
             <p>EMAIL : ${comment.email}</p>
             <p>COMMENT : ${comment.body}</p>
         `;
 
-        div.appendChild(p);
-    });
-}
+            div.appendChild(p);
+        })
+    })
+})
